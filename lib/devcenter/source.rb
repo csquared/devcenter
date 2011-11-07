@@ -2,8 +2,14 @@ module Devcenter
   class Source
     FUNCTIONS = %w{import}
     HIGHLIGHTS = {
-      'erb' => 'html',
-      'rb'  => 'ruby'
+      'erb'  => 'html',
+      'ejs'  => 'html',
+      'rb'   => 'ruby',
+      'js'   => 'java_script',
+      'term' => 'term',
+      'clj'  => 'clojure',
+      'py'   => 'python',
+      'html' => 'html'
     }
 
     def initialize(source)
@@ -26,9 +32,9 @@ module Devcenter
 
     ####
     private
-    def import(filename)
+    def import(filename, syntax = nil)
       filename = @root_dir + '/' + filename if @root_dir
-      syntax = HIGHLIGHTS[File.extname(filename).gsub(".",'')]
+      syntax ||= HIGHLIGHTS[File.extname(filename).gsub(".",'')]
       puts "importing #{filename} #{syntax && "with syntax: #{syntax}"}"
 
       source = syntax ? "#{@indent}:::#{syntax}\n" : ''
