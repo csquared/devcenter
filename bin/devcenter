@@ -1,23 +1,32 @@
 #!/usr/bin/env ruby
 
 require 'devcenter'
+require 'configliere'
 
-command = ARGV.shift
-filename = ARGV.shift
+
+Settings({
+  'article.status' => "draft",
+  'article.category_id' => '1'
+})
+
+Settings.use :commandline 
+Settings.resolve!
+
+command  = Settings.rest.shift
+filename = Settings.rest.shift
 
 case command
 when 'push'
   raise "no filename given" unless filename
-  article = {
-    :title => "Hello, World",
-    :content => Devcenter::Source.new(File.read(filename)).to_s,
-    :status => 'draft',
-    :category_id => '1'
-  }
 
-  puts "password:"
-  Devcenter.login!("csquared@heroku.com", gets)
-  Devcenter.push!(article)
+  raise ArgumentError, 'must title article' unless Settings['article.title']
+  Settings(:article => {:content => Devcenter::Source.new(File.read(filename)).to_s})
+
+  raise ArgumentError, '--user required'     unless Settings[:user]
+  raise ArgumentError, '--password required' unless Settings[:password]
+
+  Devcenter.login!(Settings[:user], Settings[:password])
+  puts Devcenter.push!(Settings[:article])
 when 'compile'
   raise "no filename given" unless filename
   puts Devcenter::Source.new(File.read(filename))

@@ -16,5 +16,6 @@ Gem::Specification.new do |gem|
   gem.version       = Devcenter::VERSION
 
   gem.add_dependency 'rest-client'
+  gem.add_dependency 'configliere'
   gem.add_development_dependency 'fakefs'
 end
