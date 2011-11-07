@@ -2,7 +2,7 @@
 
 require 'devcenter'
 
-commmand = ARGV.shift
+command = ARGV.shift
 filename = ARGV.shift
 
 case command
