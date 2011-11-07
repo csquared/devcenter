@@ -21,6 +21,6 @@ when 'push'
 when 'compile'
   raise "no filename given" unless filename
   puts Devcenter::Source.new(File.read(filename))
-when 
+else 
   puts "devcenter [compile|push] filename"
 end
