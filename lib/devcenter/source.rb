@@ -37,7 +37,7 @@ module Devcenter
       syntax ||= HIGHLIGHTS[File.extname(filename).gsub(".",'')]
       puts "importing #{filename} #{syntax && "with syntax: #{syntax}"}"
 
-      source = syntax ? "#{@indent}:::#{syntax}\n" : ''
+      source = syntax ? "#{@indent}:::#{syntax.strip}\n" : ''
       source << File.read(filename).lines.map { |l| @indent.to_s + l }.join
 
       self.class.new(source).to_s(File.dirname(filename)) #recursion FTW

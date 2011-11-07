@@ -23,6 +23,8 @@ class SourceTest < Test::Unit::TestCase
     |## This is some markdown
     |
     |!import(files/import.text)
+    |
+    |!import(files/nested/import.rb, html)
     SOURCE
 
     target = <<-SOURCE.strim
@@ -31,6 +33,9 @@ class SourceTest < Test::Unit::TestCase
     |test
     |    :::ruby
     |    puts 'hello'
+    |
+    |:::html
+    |puts 'hello'
     SOURCE
 
     assert_equal Devcenter::Source.new(source).to_s, target
