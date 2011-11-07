@@ -2,11 +2,12 @@
 
 require 'devcenter'
 
+commmand = ARGV.shift
 filename = ARGV.shift
-if filename == 'push'
-  filename = ARGV.shift
-  raise "no filename given" unless filename
 
+case command
+when 'push'
+  raise "no filename given" unless filename
   article = {
     :title => "Hello, World",
     :content => Devcenter::Source.new(File.read(filename)).to_s,
@@ -17,7 +18,9 @@ if filename == 'push'
   puts "password:"
   Devcenter.login!("csquared@heroku.com", gets)
   Devcenter.push!(article)
-else
+when 'compile'
   raise "no filename given" unless filename
   puts Devcenter::Source.new(File.read(filename))
+when 
+  puts "devcenter [compile|push] filename"
 end
