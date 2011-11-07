@@ -10,6 +10,7 @@ Settings({
 })
 
 Settings.use :commandline 
+Settings.read './article.yml' if File.exists? './article.yml'
 Settings.resolve!
 
 command  = Settings.rest.shift
@@ -26,7 +27,8 @@ when 'push'
   raise ArgumentError, '--password required' unless Settings[:password]
 
   Devcenter.login!(Settings[:user], Settings[:password])
-  puts Devcenter.push!(Settings[:article])
+  Devcenter.push!(Settings[:article])
+  puts "pushed #{Settings[:article][:title]} to devcenter at #{Devcenter.resource}"
 when 'compile'
   raise "no filename given" unless filename
   puts Devcenter::Source.new(File.read(filename))
