@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'devcenter'
+
+filename = ARGV.shift
+if filename == 'push'
+  filename = ARGV.shift
+  raise "no filename given" unless filename
+
+  article = {
+    :title => "Hello, World",
+    :content => Devcenter::Source.new(File.read(filename)).to_s,
+    :status => 'draft',
+    :category_id => '1'
+  }
+
+  puts "password:"
+  Devcenter.login!("csquared@heroku.com", gets)
+  Devcenter.push!(article)
+else
+  raise "no filename given" unless filename
+  puts Devcenter::Source.new(File.read(filename))
+end
