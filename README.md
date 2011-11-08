@@ -10,22 +10,28 @@ via the following synatx:
 Given 'filename' is a file that contains "hello, world"
 
 a file with
+
     !import(filename)
 
 becomes
+
     hello, world
 
 a file with
+
     !import(filename.rb)
 
 becomes
+
     :::ruby
     hello, world
 
 and a file with 
+
     !import(filename, syntax)
 
 becomes
+
     :::syntax
     hello, world
 
