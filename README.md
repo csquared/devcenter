@@ -5,7 +5,37 @@ devcenter is a command line tool that makes it possible to easily pull and edit 
 Heroku Dev Center article locally and then push that article to the Dev Center
 
 once the article has been downloaded (or written from scratch) you can import subfiles
-via the following synatx:
+
+
+## usage
+
+### compile
+compile an article from a top file and imported subfiles
+
+    $ devcenter compile article.txt
+
+### push
+send an article to the devcenter
+
+    $ devcenter push article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
+
+    $ DEVCENTER_URL=http://localhost:3000 devcenter push article.txt --user=user@heroku.com --password=PASSWORD
+
+### pull
+get an article from the devcenter
+
+    $ devcenter pull article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
+
+push and pull will write the article metadata to *article.yml* and use that info for subsequent requests
+
+command line arguments --article.attribute will override and replace what is in article.yml
+
+## import
+
+compile uses the <code>!import</code> call to import other files
+
+push compiles the article on the fly
+
 
 Given 'filename' is a file that contains "hello, world"
 
@@ -40,25 +70,3 @@ becomes
 - indentation is preserved
 - syntax highlighting is detected by filename
 
-## usage
-
-### compile
-compile an article from a top file and imported subfiles
-
-    $ devcenter compile article.txt
-
-### push
-send an article to the devcenter
-
-    $ devcenter push article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
-
-    $ DEVCENTER_URL=http://localhost:3000 devcenter push article.txt --user=user@heroku.com --password=PASSWORD
-
-### pull
-get an article from the devcenter
-
-    $ devcenter pull article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
-
-push and pull will write the article metadata to *article.yml* and use that info for subsequent requests
-
-command line arguments --article.attribute will override and replace what is in article.yml
