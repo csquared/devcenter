@@ -1,10 +1,22 @@
 # devcenter
 _you might be looking for [The Dev Center](http://github.com/heroku/dev-center)_
 
-devcenter is a gem that makes it possible to easily edit a Heroku Dev Center
-article locally and then push that article to the Dev Center
+devcenter is a command line tool that makes it possible to easily pull and edit a 
+Heroku Dev Center article locally and then push that article to the Dev Center
 
-it also supports importing files into your article
+once the article has been downloaded (or written from scratch) you can import subfiles
+via the following synatx:
+
+    !import(filename)
+
+or
+
+    !import(filename, ruby)
+
+
+- file locations are relative
+- indentation is preserved
+- syntax highlighting is detected by filename
 
 ## usage
 
