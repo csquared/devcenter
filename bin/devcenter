@@ -46,5 +46,4 @@ begin
   end
 rescue UserError => e
   puts e.message
-  puts e.backtrace.first
 end
