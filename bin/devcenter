@@ -9,29 +9,35 @@ Settings({
   'article.category_id' => '1'
 })
 
-Settings.use :commandline 
 Settings.read './article.yml' if File.exists? './article.yml'
+Settings.use :commandline 
 Settings.resolve!
 
 command  = Settings.rest.shift
 filename = Settings.rest.shift
 
-case command
-when 'push'
-  raise "no filename given" unless filename
+begin 
+  case command
+  when 'push'
+    raise "no filename given" unless filename
 
-  raise ArgumentError, 'must title article' unless Settings['article.title']
-  Settings(:article => {:content => Devcenter::Source.new(File.read(filename)).to_s})
+    raise ArgumentError, 'must title article' unless Settings['article.title']
+    Settings(:article => {:content => Devcenter::Source.new(File.read(filename)).to_s})
 
-  raise ArgumentError, '--user required'     unless Settings[:user]
-  raise ArgumentError, '--password required' unless Settings[:password]
+    raise ArgumentError, '--user required'     unless Settings[:user]
+    raise ArgumentError, '--password required' unless Settings[:password]
 
-  Devcenter.login!(Settings[:user], Settings[:password])
-  Devcenter.push!(Settings[:article])
-  puts "pushed #{Settings[:article][:title]} to devcenter at #{Devcenter.resource}"
-when 'compile'
-  raise "no filename given" unless filename
-  puts Devcenter::Source.new(File.read(filename))
-else 
-  puts "devcenter [compile|push] filename"
+    Devcenter.login!(Settings[:user], Settings[:password])
+    Devcenter.push!(Settings[:article])
+    puts "pushed #{Settings[:article][:title]} to devcenter at #{Devcenter.resource}"
+  when 'compile'
+    raise "no filename given" unless filename
+    puts Devcenter::Source.new(File.read(filename))
+  else 
+    puts "devcenter [compile|push] filename"
+  end
+rescue UserError => e
+  puts e.message
+  puts e.backtrace.first
 end
+
