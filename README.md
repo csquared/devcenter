@@ -1,5 +1,5 @@
 # devcenter
-_you might be looking for (The Dev Center)[http://github.com/heroku/dev-center]_
+_you might be looking for [The Dev Center](http://github.com/heroku/dev-center)_
 
 devcenter is a gem that makes it possible to easily edit a Heroku Dev Center
 article locally and then push that article to the Dev Center
@@ -27,4 +27,4 @@ get an article from the devcenter
 
 push and pull will write the article metadata to *article.yml* and use that info for subsequent requests
 
-the article.yml will pick up what you specify on the cmd line using the dotted syntax
+command line arguments --article.attribute will override and replace what is in article.yml
