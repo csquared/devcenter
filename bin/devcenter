@@ -42,8 +42,29 @@ begin
 
     puts Devcenter::Source.new(File.read(filename))
   else 
-    puts "devcenter [compile|push] filename"
+    puts DATA.read
   end
 rescue UserError => e
   puts e.message
 end
+
+__END__
+usage
+  devcenter actions login  
+
+  actions
+    compile filename
+      compile file to STDOUT
+
+    push    filename
+      compile and push to DEVCENTER_URL or Dev Center
+
+    pull    id    
+
+  describe article via: 
+    --article.title='The Title'
+    --article.slug='xyz'
+
+  login via
+    --user=username@heroku.com
+    --password=password
