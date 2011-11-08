@@ -16,23 +16,28 @@ until we have a better way
 ## usage
 
 ### compile
-compile an article from a top file and imported subfiles
+compile an article to STDOUT from a top file and imported subfiles
 
     $ devcenter compile article.txt
 
 ### push
-send an article to the devcenter
+compile an article and send and it to the devcenter
 
     $ devcenter push article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
 
     $ DEVCENTER_URL=http://localhost:3000 devcenter push article.txt --user=user@heroku.com --password=PASSWORD
 
+use the open flag to open the article in your browser
+
+    $ devcenter push article.txt --open --user=user@heroku.com --password=PASSWORD
+
 ### pull
-get an article from the devcenter
+write an article to STDOUT from the devcenter
 
     $ devcenter pull article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
 
-push and pull will write the article metadata to *article.yml* and use that info for subsequent requests
+### article.yml
+push and pull will also write the article metadata to *article.yml* and use that info for subsequent requests
 
 command line arguments --article.attribute will override and replace what is in article.yml
 
@@ -76,3 +81,7 @@ becomes
 - indentation is preserved
 - syntax highlighting is detected by filename
 
+## Todo
+
+- better authentication
+- have devcenter be a real API
