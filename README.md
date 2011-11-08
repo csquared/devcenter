@@ -7,11 +7,27 @@ Heroku Dev Center article locally and then push that article to the Dev Center
 once the article has been downloaded (or written from scratch) you can import subfiles
 via the following synatx:
 
+Given 'filename' is a file that contains "hello, world"
+
+a file with
     !import(filename)
 
-or
+becomes
+    hello, world
 
-    !import(filename, ruby)
+a file with
+    !import(filename.rb)
+
+becomes
+    :::ruby
+    hello, world
+
+and a file with 
+    !import(filename, syntax)
+
+becomes
+    :::syntax
+    hello, world
 
 
 - file locations are relative
