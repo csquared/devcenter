@@ -6,6 +6,12 @@ Heroku Dev Center article locally and then push that article to the Dev Center
 
 once the article has been downloaded (or written from scratch) you can import subfiles
 
+## install
+
+until we have a better way
+
+    $ gem source -a http://anything:samurai14@herokugems.herokuapp.com
+    $ gem install devcenter
 
 ## usage
 
