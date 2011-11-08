@@ -3,6 +3,7 @@ require "devcenter/source"
 require 'restclient'
 require 'ostruct'
 require 'configliere'
+require 'nokogiri'
 
 Settings.resolve!
 
@@ -10,6 +11,19 @@ UserError = Class.new(RuntimeError)
 
 module Devcenter
   extend self
+
+  def pull!(id)
+    raise "no session" unless @session
+    begin
+      response = resource["/admin/articles/edit/#{id}"].get(:cookies => @session, :accept => :html)
+    rescue RestClient::ResourceNotFound => e
+      raise UserError, "Could not find article with id #{id} at #{resource}"
+    end
+    doc = Nokogiri::HTML(response.body)
+    STDERR.puts("writing article metadata")
+    write({:id => id, :title => doc.css('#article_title').first['value']})  
+    doc.css('#article_content').first.content
+  end
 
   def push!(article)
     raise "no session" unless @session
@@ -30,8 +44,28 @@ module Devcenter
       puts "updated article"
       `open #{resource["/admin/articles/edit/#{article[:id]}"]}` if Settings[:open]
     end
-
     puts "writing article metadata to article.yml"
+    !! write(article)
+  end
+
+  def login!(email, password) 
+    params = {:typus_user => {:email => email, :password => password}}
+    @session = resource['/admin/session'].post(params) do |response, req, res| 
+      response.cookies.tap do |cookies|
+        cookies['_heroku_dev_center_session'] or raise UserError, "could not get a session for user #{email}"
+      end
+    end
+    true
+  end
+
+  def resource
+    @resource ||= begin
+      url = ENV['DEVCENTER_URL'] || 'https://devcenter.heroku.com'
+      RestClient::Resource.new(url)
+    end
+  end
+
+  def write(article)
     File.open("article.yml", "w") do |file|
       YAML.dump({
         :article => {
@@ -39,23 +73,6 @@ module Devcenter
           :title => article[:title]
         }
       }, file)
-    end
-  end
-
-  def login!(email, password) 
-    login_response = resource['/admin/session'].post(
-      {:typus_user => {:email => email, :password => password}}
-    ) { |response, request, result| response }
-    @session = login_response.cookies.tap do |cookies|
-      raise UserError, "could not get a session for user #{email}" unless \
-        cookies['_heroku_dev_center_session']
-    end
-  end
-
-  def resource
-    @resource ||= begin
-      url = ENV['DEVCENTER_URL'] || 'https://devcenter.heroku.com'
-      RestClient::Resource.new(url)
     end
   end
 end

@@ -17,5 +17,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'rest-client'
   gem.add_dependency 'configliere'
+  gem.add_dependency 'nokogiri'
   gem.add_development_dependency 'fakefs'
 end
