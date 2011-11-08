@@ -44,25 +44,25 @@ begin
   else 
     puts <<-HELP.gsub(/ *\|/,'')
     |usage
-    |  devcenter actions login  
+    |  devcenter actions [article info] login  
     |
     |  actions
-    |    compile filename
+    |    compile <filename>
     |      compile file to STDOUT
     |
-    |    push    filename
+    |    push <filename>
     |      compile and push to DEVCENTER_URL or Dev Center
     |
-    |    pull    id    
+    |    pull <id>    
+    |     pull article and write to STDOUT
     |
-    |  describe article via: 
+    |   article info (use dot for nested values)
     |    --article.title='The Title'
     |    --article.slug='xyz'
     |
     |  login via
     |    --user=username@heroku.com
     |    --password=password
-    |
     HELP
   end
 rescue UserError => e
