@@ -8,14 +8,23 @@ it also supports importing files into your article
 
 ## usage
 
+### compile
+compile an article from a top file and imported subfiles
+
     $ devcenter compile article.txt
 
-the following will write the article metadata to *article.yml* and use that info for subsequent requests
-
-the article.yml will pick up what you specify on the cmd line using the dotted syntax
+### push
+send an article to the devcenter
 
     $ devcenter push article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
 
     $ DEVCENTER_URL=http://localhost:3000 devcenter push article.txt --user=user@heroku.com --password=PASSWORD
 
+### pull
+get an article from the devcenter
+
     $ devcenter pull article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
+
+push and pull will write the article metadata to *article.yml* and use that info for subsequent requests
+
+the article.yml will pick up what you specify on the cmd line using the dotted syntax
