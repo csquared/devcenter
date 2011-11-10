@@ -14,10 +14,13 @@ Settings.resolve!
 command  = Settings.rest.shift
 
 def login 
-  raise ArgumentError, '--user required'     unless Settings[:user]
-  raise ArgumentError, '--password required' unless Settings[:password]
-
-  Devcenter.login!(Settings[:user], Settings[:password])
+  puts "Heroku Username:"
+  username = STDIN.gets.strip
+  system "stty -echo"
+  puts "Password:"
+  password = STDIN.gets.strip
+  system "stty echo"
+  Devcenter.login!(username, password)
 end
 
 begin 

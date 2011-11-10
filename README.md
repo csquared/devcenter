@@ -23,18 +23,21 @@ compile an article to STDOUT from a top file and imported subfiles
 ### push
 compile an article and send and it to the devcenter
 
-    $ devcenter push article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
+    $ devcenter push article.txt --article.title='My Title' 
 
-    $ DEVCENTER_URL=http://localhost:3000 devcenter push article.txt --user=user@heroku.com --password=PASSWORD
+    $ DEVCENTER_URL=http://localhost:3000 devcenter push article.txt 
 
 use the open flag to open the article in your browser
 
-    $ devcenter push article.txt --open --user=user@heroku.com --password=PASSWORD
+    $ devcenter push article.txt --open 
 
 ### pull
 write an article to STDOUT from the devcenter
 
-    $ devcenter pull article.txt --article.title='My Title' --user=user@heroku.com --password=PASSWORD
+    $ devcenter pull article.txt --article.title='My Title'
+
+push and pull will prompt for your devcenter login
+* google apps auth not supported yet
 
 ### article.yml
 push and pull will also write the article metadata to *article.yml* and use that info for subsequent requests
